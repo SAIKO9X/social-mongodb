@@ -1,6 +1,7 @@
 package com.saiko.workshop.mongo.controllers;
 
 import com.saiko.workshop.mongo.dto.UserDTO;
+import com.saiko.workshop.mongo.entities.Post;
 import com.saiko.workshop.mongo.entities.User;
 import com.saiko.workshop.mongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,11 @@ public class UserController {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
